@@ -15,7 +15,6 @@ const DifficultyItemsList = ({
         <List.Item
           title={name}
           onPress={() => handleDifficultyItemPress(name)}
-          style={{backgroundColor: 'grey'}}
         />
       )}
     />

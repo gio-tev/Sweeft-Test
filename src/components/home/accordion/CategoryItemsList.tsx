@@ -14,7 +14,6 @@ const CategoryItemsList = ({
         <List.Item
           title={item.name}
           onPress={() => handleCategoryItemPress(item.name, item.id)}
-          style={{backgroundColor: 'grey'}}
         />
       )}
     />
