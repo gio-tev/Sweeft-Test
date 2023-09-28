@@ -16,4 +16,9 @@ export type TestState = {
     currentQuestionIndex: number;
     testScore: number;
   }) => void;
+  resetState: (updates: {
+    currentQuestionIndex: number;
+    testScore: number;
+    questions?: never[];
+  }) => void;
 };

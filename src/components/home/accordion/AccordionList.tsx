@@ -11,7 +11,6 @@ const AccordionList = ({
 }: AccordionListPropsTypes) => {
   const {
     colors: {
-      primary,
       elevation: {level5},
     },
   } = useTheme();
@@ -20,7 +19,6 @@ const AccordionList = ({
 
   return (
     <List.Accordion
-      titleStyle={{color: primary}}
       style={styles.list}
       title={title}
       expanded={expanded}

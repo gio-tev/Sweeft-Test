@@ -23,14 +23,9 @@ const Home = () => {
 
   const styles = getStyles();
 
-  // console.log('categoryId', categoryId, 'difficulty', difficulty);
-
   useEffect(() => {
     if (questionsRes.length) {
       setQeustions(questionsRes);
-
-      // setCategoryId(0);
-      // setDifficulty('');
 
       navigation.navigate('Question');
     }

@@ -35,6 +35,7 @@ const getStyles = () => {
     container: {
       width: '80%',
       gap: 20,
+      // flexWrap: 'wrap',
     },
     answer: {
       flexDirection: 'row',
@@ -45,6 +46,7 @@ const getStyles = () => {
     },
     label: {
       color: 'black',
+      width: '75%',
     },
   });
 };

@@ -16,14 +16,13 @@ const useTestStore = create<TestState>(set => ({
       ...updates,
     }));
   },
+
+  resetState: defaults => {
+    set(state => ({
+      ...state,
+      ...defaults,
+    }));
+  },
 }));
-// set(state => ({
-//   ...state,
-//   currentQuestionIndex:
-//     state.questions.length - 1 > state.currentQuestionIndex
-//       ? state.currentQuestionIndex + 1
-//       : state.currentQuestionIndex,
-//   testScore: correctAnswer ? state.testScore + 1 : state.testScore,
-// }));
 
 export default useTestStore;
