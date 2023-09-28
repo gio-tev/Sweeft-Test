@@ -1,94 +1,100 @@
 import {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, useWindowDimensions, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useTheme, ProgressBar} from 'react-native-paper';
 import useTestStore from '../store/useTestStore';
 import Title from '../components/title/Title';
 import he from 'he';
 import Answers from '../components/question/Answers';
-import {useTheme} from 'react-native-paper';
 import Button from '../components/button/Button';
+import QuestionText from '../components/question/QuestionText';
 
 const Question = () => {
-  const {questions, currentQuestionIndex, updateState} = useTestStore(
-    state => state,
-  );
-
-  const [value, setValue] = useState<string>('');
+  const {questions, currentQuestionIndex, testScore, updateState} =
+    useTestStore(state => state);
 
   const navigation = useNavigation<StackNavigationProp<any>>();
 
+  const {width} = useWindowDimensions();
+
+  const [value, setValue] = useState<string>('');
+
   const {
-    colors: {
-      elevation: {level5},
-    },
+    colors: {primary},
   } = useTheme();
 
-  const styles = getStyles(level5);
+  const styles = getStyles();
 
   const {
-    correct_answer,
-    incorrect_answers,
+    correct_answer: encodedCorectAnswer,
+    incorrect_answers: encodedIncorectAnswers,
     question: encodedQuestion,
   } = questions[currentQuestionIndex];
 
   const questionTitle = `Question ${currentQuestionIndex + 1}`;
+  const correctAnswer = he.decode(encodedCorectAnswer);
+  const incorrectAnswers = encodedIncorectAnswers.map(ans => he.decode(ans));
   const question = he.decode(encodedQuestion);
-  const answers = [...incorrect_answers, correct_answer];
+  const answers = [...incorrectAnswers, correctAnswer];
+
+  const progress = (currentQuestionIndex + 1) / questions.length;
 
   const onAnswerChange = (answer: string) => {
     setValue(answer);
   };
 
   const handleNextQuestionPress = () => {
-    if (value === correct_answer) updateState(true);
-    else updateState();
+    const isValueCorrect = value === correctAnswer;
+    const isLastQuestion = currentQuestionIndex === questions.length - 1;
 
-    if (currentQuestionIndex < questions.length - 1) {
-      navigation.push('Question');
-    } else {
-      navigation.navigate('Results');
-    }
+    const updates = {
+      currentQuestionIndex: isLastQuestion
+        ? currentQuestionIndex
+        : currentQuestionIndex + 1,
+      testScore: isValueCorrect ? testScore + 1 : testScore,
+    };
+
+    updateState(updates);
+
+    if (isLastQuestion) navigation.navigate('Results');
+    else navigation.push('Question');
   };
 
   return (
     <View style={styles.container}>
-      <Title title={questionTitle} />
+      <ProgressBar progress={progress} color={primary} style={{width: width}} />
 
-      <Text style={styles.question}>{question}</Text>
+      <View style={styles.innerContainer}>
+        <Title title={questionTitle} />
 
-      <Answers
-        answers={answers}
-        value={value}
-        onAnswerChange={onAnswerChange}
-      />
+        <QuestionText question={question} />
 
-      <Button
-        title="Next Question"
-        disabled={!value}
-        handlePress={handleNextQuestionPress}
-      />
+        <Answers
+          answers={answers}
+          value={value}
+          onAnswerChange={onAnswerChange}
+        />
+
+        <Button
+          title="Next Question"
+          disabled={!value}
+          handlePress={handleNextQuestionPress}
+        />
+      </View>
     </View>
   );
 };
 
-const getStyles = (borderBottomColor: string) => {
+const getStyles = () => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: 'center',
       backgroundColor: 'white',
-      gap: 40,
     },
-    question: {
-      fontSize: 18,
-      color: 'black',
-      width: '80%',
-      // paddingHorizontal: 30,
-      textAlign: 'center',
-      borderBottomWidth: 1,
-      borderBottomColor,
-      paddingBottom: 10,
+    innerContainer: {
+      alignItems: 'center',
+      gap: 40,
     },
   });
 };

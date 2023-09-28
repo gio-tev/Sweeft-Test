@@ -10,18 +10,20 @@ const useTestStore = create<TestState>(set => ({
     set({questions});
   },
 
-  updateState: (correctAnswer = false) => {
-    console.log('updateState called with value', correctAnswer);
-
+  updateState: updates => {
     set(state => ({
       ...state,
-      currentQuestionIndex:
-        state.questions.length - 1 > state.currentQuestionIndex
-          ? state.currentQuestionIndex + 1
-          : state.currentQuestionIndex,
-      testScore: correctAnswer ? state.testScore + 1 : state.testScore,
+      ...updates,
     }));
   },
 }));
+// set(state => ({
+//   ...state,
+//   currentQuestionIndex:
+//     state.questions.length - 1 > state.currentQuestionIndex
+//       ? state.currentQuestionIndex + 1
+//       : state.currentQuestionIndex,
+//   testScore: correctAnswer ? state.testScore + 1 : state.testScore,
+// }));
 
 export default useTestStore;

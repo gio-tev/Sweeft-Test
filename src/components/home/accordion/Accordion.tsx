@@ -2,7 +2,6 @@ import {useState} from 'react';
 import {List} from 'react-native-paper';
 import useFetchCategories from '../../../services/useFetchCategories';
 import Error from '../../Error';
-import {ActivityIndicator} from 'react-native-paper';
 import AccordionList from './AccordionList';
 import CategoryItemsList from './CategoryItemsList';
 import DifficultyItemsList from './DifficultyItemsList';
@@ -12,8 +11,7 @@ const Accordion = ({
   onCategoryIdChange,
   onDifficultyChange,
 }: AccordionPropsTypes) => {
-  const {categoriesRes, categoriesLoading, categoriesError} =
-    useFetchCategories();
+  const {categoriesRes, categoriesError} = useFetchCategories();
 
   const [expandedCategory, setExpandedCategory] = useState(false);
   const [expandedDifficulty, setExpandedDifficulty] = useState(false);
@@ -40,7 +38,7 @@ const Accordion = ({
     setExpandedDifficulty(prevState => !prevState);
   };
 
-  if (categoriesLoading) return <ActivityIndicator />;
+  if (!categoriesRes) return null;
 
   if (categoriesError) return <Error />;
 

@@ -41,6 +41,7 @@ const getStyles = () => {
       alignItems: 'center',
       gap: 20,
       marginTop: 10,
+      marginLeft: 10,
     },
     label: {
       color: 'black',

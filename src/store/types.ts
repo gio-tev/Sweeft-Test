@@ -12,5 +12,8 @@ export type TestState = {
   currentQuestionIndex: number;
   testScore: number;
   setQeustions: (by: QuestionsState) => void;
-  updateState: (by?: boolean) => void;
+  updateState: (updates: {
+    currentQuestionIndex: number;
+    testScore: number;
+  }) => void;
 };

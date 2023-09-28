@@ -17,8 +17,10 @@ const getStyles = (color: string) => {
     title: {
       color,
       fontSize: 40,
-      marginTop: '30%',
       fontWeight: '700',
+      marginTop: '30%',
+      marginHorizontal: 30,
+      textAlign: 'center',
     },
   });
 };
