@@ -8,7 +8,8 @@ const Stack = createStackNavigator();
 const StackNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator
+        screenOptions={{headerShown: false, gestureEnabled: false}}>
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Question" component={Question} />
       </Stack.Navigator>
