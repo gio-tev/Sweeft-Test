@@ -1,7 +1,7 @@
 export type ButtonPropTypes = {
-  loading: boolean;
   title: string;
   disabled: boolean;
-  handleStartTestPress: () => void;
+  handlePress: () => void;
+  loading?: boolean;
   contentStyle?: {paddingVertical: number; paddingHorizontal: number};
 };

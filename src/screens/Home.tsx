@@ -7,7 +7,7 @@ import {TOKEN} from '../services/utils/constants';
 import useTestStore from '../store/useTestStore';
 import Error from '../components/Error';
 import Accordion from '../components/home/accordion/Accordion';
-import Title from '../components/home/title/Title';
+import Title from '../components/title/Title';
 import Button from '../components/button/Button';
 
 const Home = () => {
@@ -23,7 +23,7 @@ const Home = () => {
 
   const styles = getStyles();
 
-  console.log('categoryId', categoryId, 'difficulty', difficulty);
+  // console.log('categoryId', categoryId, 'difficulty', difficulty);
 
   useEffect(() => {
     if (questionsRes.length) {
@@ -54,7 +54,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <Title />
+      <Title title="Sweeft Test" />
 
       <Accordion
         onCategoryIdChange={onCategoryIdChange}
@@ -62,10 +62,10 @@ const Home = () => {
       />
 
       <Button
-        loading={questionsLoading}
         title="Start Test"
         disabled={!categoryId || !difficulty}
-        handleStartTestPress={handleStartTestPress}
+        handlePress={handleStartTestPress}
+        loading={questionsLoading}
       />
     </View>
   );

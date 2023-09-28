@@ -2,14 +2,14 @@ import {Text, StyleSheet} from 'react-native';
 
 import {useTheme} from 'react-native-paper';
 
-const Title = () => {
+const Title = ({title}: {title: string}) => {
   const {
     colors: {primary},
   } = useTheme();
 
   const styles = getStyles(primary);
 
-  return <Text style={styles.title}>Sweeft Test</Text>;
+  return <Text style={styles.title}>{title}</Text>;
 };
 
 const getStyles = (color: string) => {
