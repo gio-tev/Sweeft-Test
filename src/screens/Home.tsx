@@ -1,20 +1,16 @@
 import {useState, useEffect} from 'react';
-import {View} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {ActivityIndicator} from 'react-native-paper';
-import useFetchQuestionsCount from '../services/useFetchQuestionsCount';
 import useFetchQuestions from '../services/useFetchQuestions';
 import {TOKEN} from '../services/utils/constants';
 import useTestStore from '../store/useTestStore';
 import Error from '../components/Error';
 import Accordion from '../components/home/accordion/Accordion';
 import Title from '../components/home/title/Title';
-import Button from '../components/home/homeButton/HomeButton';
+import Button from '../components/button/Button';
 
 const Home = () => {
-  const {questionsCountRes, countLoading, countError, fetchQuestionsCount} =
-    useFetchQuestionsCount();
   const {questionsRes, questionsLoading, questionsError, fetchQuestions} =
     useFetchQuestions();
 
@@ -25,26 +21,18 @@ const Home = () => {
 
   const navigation = useNavigation<StackNavigationProp<any>>();
 
+  const styles = getStyles();
+
   console.log('categoryId', categoryId, 'difficulty', difficulty);
-
-  useEffect(() => {
-    if (questionsCountRes && categoryId && difficulty) {
-      const amount = questionsCountRes < 10 ? questionsCountRes : 10;
-      const category = categoryId;
-      const token = TOKEN;
-
-      fetchQuestions({amount, category, difficulty, token});
-    }
-  }, [questionsCountRes, categoryId, difficulty, fetchQuestions]);
 
   useEffect(() => {
     if (questionsRes.length) {
       setQeustions(questionsRes);
 
-      setCategoryId(0);
-      setDifficulty('');
+      // setCategoryId(0);
+      // setDifficulty('');
 
-      navigation.navigate('Question', {currentQuestionIndex: 0});
+      navigation.navigate('Question');
     }
   }, [questionsRes, setQeustions, navigation]);
 
@@ -56,31 +44,42 @@ const Home = () => {
   };
 
   const handleStartTestPress = () => {
-    fetchQuestionsCount({categoryId, difficulty});
+    const category = categoryId;
+    const token = TOKEN;
+
+    fetchQuestions({category, difficulty, token});
   };
 
-  if (countLoading || questionsLoading) return <ActivityIndicator />;
-
-  if (countError || questionsError) return <Error />;
+  if (questionsError) return <Error />;
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        gap: 70,
-        backgroundColor: 'white',
-      }}>
+    <View style={styles.container}>
       <Title />
 
-      <Accordion {...{onCategoryIdChange, onDifficultyChange}} />
+      <Accordion
+        onCategoryIdChange={onCategoryIdChange}
+        onDifficultyChange={onDifficultyChange}
+      />
 
       <Button
+        loading={questionsLoading}
+        title="Start Test"
         disabled={!categoryId || !difficulty}
         handleStartTestPress={handleStartTestPress}
       />
     </View>
   );
+};
+
+const getStyles = () => {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      gap: 70,
+      backgroundColor: 'white',
+    },
+  });
 };
 
 export default Home;

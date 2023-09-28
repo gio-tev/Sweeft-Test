@@ -11,6 +11,3 @@ export const CATEGORY_QUESTIONS_COUNT_MAP: Record<string, string> = {
   medium: 'total_medium_question_count',
   hard: 'total_hard_question_count',
 };
-
-// export const RESET_TOKEN_URL = `https://opentdb.com/api_token.php?command=reset&token=${TOKEN}`;
-// https://opentdb.com/api_token.php?command=request

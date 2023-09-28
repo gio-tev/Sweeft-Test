@@ -1,24 +1,21 @@
 import {Button as PaperButton} from 'react-native-paper';
+import {ButtonPropTypes} from './types';
 
 const Button = ({
+  loading,
+  title,
   disabled,
   handleStartTestPress,
-}: {
-  disabled: boolean;
-  handleStartTestPress: () => void;
-}) => {
+  contentStyle = {paddingVertical: 10, paddingHorizontal: 70},
+}: ButtonPropTypes) => {
   return (
     <PaperButton
+      loading={loading}
       disabled={disabled}
-      contentStyle={{paddingVertical: 10, paddingHorizontal: 70}}
-      style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        // marginBottom: '20%',
-      }}
+      contentStyle={contentStyle}
       mode="contained"
       onPress={handleStartTestPress}>
-      Start Test
+      {title}
     </PaperButton>
   );
 };

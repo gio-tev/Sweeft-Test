@@ -1,12 +1,17 @@
-import {BASE_URL, NEW_TOKEN_URL} from './constants';
-import {QueryTypes} from '../types';
+import {
+  BASE_URL,
+  NEW_TOKEN_URL,
+  QUESTION_COUNT_URL,
+  CATEGORY_QUESTIONS_COUNT_MAP,
+} from './constants';
+import {QuesriesWithAmountTypes} from '../types';
 
 export const getQuestionUrl = ({
   amount,
   category,
   difficulty,
   token,
-}: QueryTypes) => {
+}: QuesriesWithAmountTypes) => {
   return `${BASE_URL}?amount=${amount}&category=${category}&difficulty=${difficulty}&token=${token}`;
 };
 
@@ -23,4 +28,21 @@ export const fetchNewToken = async () => {
   handleResponseError(data, 'retrieving new token failed.');
 
   return data.token;
+};
+
+export const fetchQuestionsCount = async (
+  category: number,
+  difficulty: string,
+) => {
+  const res = await fetch(`${QUESTION_COUNT_URL}${category}`);
+  const data = await res.json();
+
+  if (!data.category_id) {
+    throw new Error('Fetching category question count failed.');
+  }
+
+  const questionsCount =
+    data.category_question_count[CATEGORY_QUESTIONS_COUNT_MAP[difficulty]];
+
+  return questionsCount;
 };

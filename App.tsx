@@ -4,8 +4,6 @@ import StackNavigator from './src/navigators/StackNavigator';
 import {theme} from './src/theme/theme';
 
 const App = (): JSX.Element => {
-  console.log(theme.colors, 'theme');
-
   return (
     <PaperProvider theme={theme}>
       <SafeAreaView style={{flex: 1}}>

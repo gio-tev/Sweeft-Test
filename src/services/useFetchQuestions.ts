@@ -1,5 +1,6 @@
 import {useState, useCallback} from 'react';
 import {
+  fetchQuestionsCount,
   getQuestionUrl,
   fetchNewToken,
   handleResponseError,
@@ -15,12 +16,17 @@ const useFetchQuestions = () => {
     try {
       setQuestionsLoading(true);
 
-      let res = await fetch(getQuestionUrl(queries));
+      const {category, difficulty} = queries;
+      const questionsCount = await fetchQuestionsCount(category, difficulty);
+      const amount = questionsCount < 10 ? questionsCount : 10;
+      const quesriesWithAmount = {amount, ...queries};
+
+      let res = await fetch(getQuestionUrl(quesriesWithAmount));
       let data = await res.json();
 
       if (data.response_code === 3 || data.response_code === 4) {
         const newToken = await fetchNewToken();
-        const queriesWithNewToken = {...queries, token: newToken};
+        const queriesWithNewToken = {...quesriesWithAmount, token: newToken};
 
         res = await fetch(getQuestionUrl(queriesWithNewToken));
         data = await res.json();
@@ -36,6 +42,7 @@ const useFetchQuestions = () => {
       }
     } finally {
       setQuestionsLoading(false);
+      setQuestionsRes([]);
     }
   }, []);
 

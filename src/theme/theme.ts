@@ -7,16 +7,5 @@ export const theme = {
     primary: 'tomato',
     secondary: 'yellow',
     onSurfaceDisabled: 'tomato',
-    // onBackground: 'red',
-    // surfaceDisabled: 'red',
-    // disabledBackgroundColor: 'red',
   },
 };
-
-// export default function Main() {
-//   return (
-//     <PaperProvider theme={theme}>
-//       <App />
-//     </PaperProvider>
-//   );
-// }
