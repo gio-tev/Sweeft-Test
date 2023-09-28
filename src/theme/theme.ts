@@ -5,7 +5,7 @@ export const theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: 'tomato',
-    secondary: 'yellow',
+    secondary: '#304A68',
     onSurfaceDisabled: 'tomato',
   },
 };

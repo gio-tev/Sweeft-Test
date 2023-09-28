@@ -2,12 +2,12 @@ import {Text, StyleSheet} from 'react-native';
 
 import {useTheme} from 'react-native-paper';
 
-const Title = ({title}: {title: string}) => {
+const Title = ({title, darkColor}: {title: string; darkColor?: boolean}) => {
   const {
-    colors: {primary},
+    colors: {primary, secondary},
   } = useTheme();
 
-  const styles = getStyles(primary);
+  const styles = getStyles(darkColor ? secondary : primary);
 
   return <Text style={styles.title}>{title}</Text>;
 };

@@ -1,9 +1,9 @@
-import {View, StyleSheet, Button} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import useTestStore from '../store/useTestStore';
 import Title from '../components/title/Title';
-// import Button from '../components/button/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
+import ResultButtons from '../components/results/ResultButtons';
 
 const Results = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
@@ -13,54 +13,37 @@ const Results = () => {
 
   const title = `Your score is ${testScore} out of ${questions.length}`;
 
-  const handleStartOvePress = () => {
+  const handleTestButtonsPress = (routeName: string, additionalState = {}) => {
     const defaultState = {
       currentQuestionIndex: 0,
       testScore: 0,
+      ...additionalState,
     };
 
     resetState(defaultState);
 
     navigation.reset({
       index: 0,
-      routes: [{name: 'Question'}],
+      routes: [{name: routeName}],
     });
   };
 
-  const handleGoHomePress = () => {
-    const defaultState = {
-      currentQuestionIndex: 0,
-      testScore: 0,
-      questions: [],
-    };
+  const handleRetakeTestPress = () => {
+    handleTestButtonsPress('Question');
+  };
 
-    resetState(defaultState);
-
-    navigation.reset({
-      index: 0,
-      routes: [{name: 'Home'}],
-    });
+  const handleNewTestPress = () => {
+    handleTestButtonsPress('Home', {questions: []});
   };
 
   return (
     <View style={styles.container}>
-      <Title title={title} />
+      <Title title={title} darkColor={true} />
 
-      <Button
-        onPress={handleStartOvePress}
-        title="start over"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"
+      <ResultButtons
+        handleRetakeTestPress={handleRetakeTestPress}
+        handleNewTestPress={handleNewTestPress}
       />
-
-      <Button
-        onPress={handleGoHomePress}
-        title="Lgo home"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"
-      />
-
-      {/* <Button /> */}
     </View>
   );
 };
@@ -70,7 +53,7 @@ const getStyles = () => {
     container: {
       flex: 1,
       alignItems: 'center',
-      gap: 40,
+      gap: 80,
       backgroundColor: 'white',
     },
   });
