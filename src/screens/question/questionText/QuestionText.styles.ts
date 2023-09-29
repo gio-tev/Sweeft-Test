@@ -9,7 +9,7 @@ export const getStyles = (borderBottomColor: string, color: string) => {
       color,
       borderBottomColor,
       borderBottomWidth: 1,
-      paddingBottom: 10,
+      paddingBottom: 15,
     },
   });
 };
