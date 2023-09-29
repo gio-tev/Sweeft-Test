@@ -1,18 +1,15 @@
 import {useState} from 'react';
 import {List} from 'react-native-paper';
-import useFetchCategories from '../../../services/useFetchCategories';
-import Error from '../../../components/error/Error';
 import AccordionList from './AccordionList';
 import CategoryItemsList from './CategoryItemsList';
 import DifficultyItemsList from './DifficultyItemsList';
 import {AccordionPropsTypes} from './Accordion.types';
 
 const Accordion = ({
+  categoriesRes,
   onCategoryIdChange,
   onDifficultyChange,
 }: AccordionPropsTypes) => {
-  const {categoriesRes, categoriesError} = useFetchCategories();
-
   const [expandedCategory, setExpandedCategory] = useState(false);
   const [expandedDifficulty, setExpandedDifficulty] = useState(false);
 
@@ -37,10 +34,6 @@ const Accordion = ({
     onDifficultyChange(item[0].toLowerCase() + item.slice(1));
     setExpandedDifficulty(prevState => !prevState);
   };
-
-  if (!categoriesRes) return null;
-
-  if (categoriesError) return <Error />;
 
   return (
     <List.Section style={{gap: 20, width: '80%'}}>

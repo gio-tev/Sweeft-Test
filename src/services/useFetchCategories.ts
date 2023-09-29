@@ -4,7 +4,7 @@ import {CATEGORIES_URL} from './utils/constants';
 const useFetchCategories = () => {
   const [categoriesRes, setCategoriesRes] = useState([]);
   const [categoriesLoading, setCategoriesLoading] = useState(false);
-  const [categoriesError, setCategoriesError] = useState('');
+  const [categoriesError, setCategoriesError] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -22,7 +22,7 @@ const useFetchCategories = () => {
       } catch (err) {
         console.error(err, '---------error----------');
         if (err instanceof Error) {
-          setCategoriesError(err.message);
+          setCategoriesError(true);
         }
       } finally {
         setCategoriesLoading(false);

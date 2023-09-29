@@ -15,9 +15,12 @@ export const useThemeColors = () => {
     colors: {
       primary,
       secondary,
+      error,
+      errorContainer,
+      onError,
       elevation: {level5},
     },
   } = useTheme();
 
-  return {primary, secondary, level5};
+  return {primary, secondary, level5, error, errorContainer, onError};
 };

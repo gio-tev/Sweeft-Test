@@ -10,7 +10,7 @@ import {QueryTypes} from './types';
 const useFetchQuestions = () => {
   const [questionsRes, setQuestionsRes] = useState([]);
   const [questionsLoading, setQuestionsLoading] = useState(false);
-  const [questionsError, setQuestionsError] = useState('');
+  const [questionsError, setQuestionsError] = useState(false);
 
   const fetchQuestions = useCallback(async (queries: QueryTypes) => {
     try {
@@ -38,7 +38,7 @@ const useFetchQuestions = () => {
     } catch (err) {
       console.error(err, '---------error----------');
       if (err instanceof Error) {
-        setQuestionsError(err.message);
+        setQuestionsError(true);
       }
     } finally {
       setQuestionsLoading(false);

@@ -2,7 +2,9 @@ import {useState, useEffect} from 'react';
 import {View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {ActivityIndicator} from 'react-native-paper';
 import useFetchQuestions from '../../services/useFetchQuestions';
+import useFetchCategories from '../../services/useFetchCategories';
 import {TOKEN} from '../../services/utils/constants';
 import useTestStore from '../../store/useTestStore';
 import Error from '../../components/error/Error';
@@ -12,6 +14,8 @@ import Button from '../../components/button/Button';
 import {getHomeStyles} from './Home.styles';
 
 const Home = () => {
+  const {categoriesRes, categoriesLoading, categoriesError} =
+    useFetchCategories();
   const {questionsRes, questionsLoading, questionsError, fetchQuestions} =
     useFetchQuestions();
 
@@ -46,13 +50,16 @@ const Home = () => {
     fetchQuestions({category, difficulty, token});
   };
 
-  if (questionsError) return <Error />;
+  if (categoriesLoading) return <ActivityIndicator style={styles.container} />;
+
+  if (categoriesError || questionsError) return <Error />;
 
   return (
     <View style={styles.container}>
       <Title title="Sweeft Test" />
 
       <Accordion
+        categoriesRes={categoriesRes}
         onCategoryIdChange={onCategoryIdChange}
         onDifficultyChange={onDifficultyChange}
       />

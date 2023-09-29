@@ -1,6 +1,7 @@
 import {ReactNode} from 'react';
 
 export type AccordionPropsTypes = {
+  categoriesRes: never[];
   onCategoryIdChange: (id: number) => void;
   onDifficultyChange: (val: string) => void;
 };

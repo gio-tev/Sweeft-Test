@@ -8,6 +8,7 @@ import {getResultsStyles} from './Results.styles';
 
 const Results = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
+
   const {questions, testScore, resetState} = useTestStore(state => state);
 
   const styles = getResultsStyles();
