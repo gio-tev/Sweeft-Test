@@ -50,6 +50,7 @@ const Home = () => {
   if (categoriesLoading) return <ActivityIndicator style={styles.container} />;
 
   if (categoriesError || questionsError) return <Error />;
+  // return <Error />;
 
   return (
     <View style={styles.container}>

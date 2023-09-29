@@ -8,9 +8,9 @@ import Title from '../../components/title/Title';
 import he from 'he';
 import Answers from './answers/Answers';
 import Button from '../../components/button/Button';
-import QuestionText from './questionText/QuestionText';
 import {useThemeColors} from '../../theme/theme';
 import {getQuestionStyles} from './Question.styles';
+import Text from '../../components/text/Text';
 
 const Question = () => {
   const {questions, currentQuestionIndex, testScore, updateState} =
@@ -22,9 +22,9 @@ const Question = () => {
 
   const [value, setValue] = useState<string>('');
 
-  const {primary} = useThemeColors();
+  const {primary, secondary, level5} = useThemeColors();
 
-  const styles = getQuestionStyles();
+  const styles = getQuestionStyles(level5, secondary);
 
   const {
     correct_answer: encodedCorectAnswer,
@@ -68,7 +68,7 @@ const Question = () => {
       <View style={styles.innerContainer}>
         <Title title={questionTitle} />
 
-        <QuestionText question={question} />
+        <Text value={question} style={styles.question} />
 
         <Answers
           answers={answers}
