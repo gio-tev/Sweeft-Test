@@ -1,14 +1,16 @@
 import {useState} from 'react';
-import {View, useWindowDimensions, StyleSheet} from 'react-native';
+import {View, useWindowDimensions} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useTheme, ProgressBar} from 'react-native-paper';
-import useTestStore from '../store/useTestStore';
-import Title from '../components/title/Title';
+import {ProgressBar} from 'react-native-paper';
+import useTestStore from '../../store/useTestStore';
+import Title from '../../components/title/Title';
 import he from 'he';
-import Answers from '../components/question/Answers';
-import Button from '../components/button/Button';
-import QuestionText from '../components/question/QuestionText';
+import Answers from './answers/Answers';
+import Button from '../../components/button/Button';
+import QuestionText from './questionText/QuestionText';
+import {useThemeColors} from '../../theme/theme';
+import {getQuestionStyles} from './Question.styles';
 
 const Question = () => {
   const {questions, currentQuestionIndex, testScore, updateState} =
@@ -20,11 +22,9 @@ const Question = () => {
 
   const [value, setValue] = useState<string>('');
 
-  const {
-    colors: {primary},
-  } = useTheme();
+  const {primary} = useThemeColors();
 
-  const styles = getStyles();
+  const styles = getQuestionStyles();
 
   const {
     correct_answer: encodedCorectAnswer,
@@ -84,19 +84,6 @@ const Question = () => {
       </View>
     </View>
   );
-};
-
-const getStyles = () => {
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: 'white',
-    },
-    innerContainer: {
-      alignItems: 'center',
-      gap: 40,
-    },
-  });
 };
 
 export default Question;

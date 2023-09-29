@@ -1,6 +1,6 @@
 import {FlatList} from 'react-native';
 import {List} from 'react-native-paper';
-import {CategoryPropsTypes} from './types';
+import {CategoryPropsTypes} from './Accordion.types';
 
 const CategoryItemsList = ({
   categoriesRes,

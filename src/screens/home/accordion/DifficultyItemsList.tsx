@@ -1,6 +1,6 @@
 import {FlatList} from 'react-native';
 import {List} from 'react-native-paper';
-import {DifficultyPropsTypes} from './types';
+import {DifficultyPropsTypes} from './Accordion.types';
 
 const DIFFICULTY_LEVELS = ['Easy', 'Medium', 'Hard'];
 

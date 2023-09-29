@@ -1,28 +1,14 @@
-import {Text, StyleSheet} from 'react-native';
+import {Text} from 'react-native';
+import {useThemeColors} from '../../theme/theme';
+import {TitlePropTypes} from './Title.types';
+import {getTitleStyles} from './Title.styles';
 
-import {useTheme} from 'react-native-paper';
+const Title = ({title, darkColor}: TitlePropTypes) => {
+  const {primary, secondary} = useThemeColors();
 
-const Title = ({title, darkColor}: {title: string; darkColor?: boolean}) => {
-  const {
-    colors: {primary, secondary},
-  } = useTheme();
-
-  const styles = getStyles(darkColor ? secondary : primary);
+  const styles = getTitleStyles(darkColor ? secondary : primary);
 
   return <Text style={styles.title}>{title}</Text>;
-};
-
-const getStyles = (color: string) => {
-  return StyleSheet.create({
-    title: {
-      color,
-      fontSize: 40,
-      fontWeight: '700',
-      marginTop: '30%',
-      marginHorizontal: 30,
-      textAlign: 'center',
-    },
-  });
 };
 
 export default Title;

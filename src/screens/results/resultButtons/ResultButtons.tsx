@@ -1,14 +1,13 @@
-import {View, StyleSheet} from 'react-native';
-import Button from '../button/Button';
+import {View} from 'react-native';
+import Button from '../../../components/button/Button';
+import {ResultButtonsPropTypes} from './ResultButtons.types';
+import {getResultButtonsStyles} from './ResultButtons.styles';
 
 const ResultButtons = ({
   handleRetakeTestPress,
   handleNewTestPress,
-}: {
-  handleRetakeTestPress: () => void;
-  handleNewTestPress: () => void;
-}) => {
-  const styles = getStyles();
+}: ResultButtonsPropTypes) => {
+  const styles = getResultButtonsStyles();
 
   return (
     <View style={styles.buttonsContainer}>
@@ -25,14 +24,6 @@ const ResultButtons = ({
       />
     </View>
   );
-};
-
-const getStyles = () => {
-  return StyleSheet.create({
-    buttonsContainer: {
-      gap: 40,
-    },
-  });
 };
 
 export default ResultButtons;

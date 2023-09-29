@@ -1,5 +1,5 @@
 import {Button as PaperButton} from 'react-native-paper';
-import {ButtonPropTypes} from './types';
+import {ButtonPropTypes} from './Button.types';
 
 const Button = ({
   title,

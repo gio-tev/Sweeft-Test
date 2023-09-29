@@ -1,14 +1,15 @@
 import {useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import useFetchQuestions from '../services/useFetchQuestions';
-import {TOKEN} from '../services/utils/constants';
-import useTestStore from '../store/useTestStore';
-import Error from '../components/Error';
-import Accordion from '../components/home/accordion/Accordion';
-import Title from '../components/title/Title';
-import Button from '../components/button/Button';
+import useFetchQuestions from '../../services/useFetchQuestions';
+import {TOKEN} from '../../services/utils/constants';
+import useTestStore from '../../store/useTestStore';
+import Error from '../../components/error/Error';
+import Accordion from './accordion/Accordion';
+import Title from '../../components/title/Title';
+import Button from '../../components/button/Button';
+import {getHomeStyles} from './Home.styles';
 
 const Home = () => {
   const {questionsRes, questionsLoading, questionsError, fetchQuestions} =
@@ -21,7 +22,7 @@ const Home = () => {
 
   const navigation = useNavigation<StackNavigationProp<any>>();
 
-  const styles = getStyles();
+  const styles = getHomeStyles();
 
   useEffect(() => {
     if (questionsRes.length) {
@@ -64,17 +65,6 @@ const Home = () => {
       />
     </View>
   );
-};
-
-const getStyles = () => {
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      gap: 70,
-      backgroundColor: 'white',
-    },
-  });
 };
 
 export default Home;

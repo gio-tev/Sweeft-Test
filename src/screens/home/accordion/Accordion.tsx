@@ -1,11 +1,11 @@
 import {useState} from 'react';
 import {List} from 'react-native-paper';
 import useFetchCategories from '../../../services/useFetchCategories';
-import Error from '../../Error';
+import Error from '../../../components/error/Error';
 import AccordionList from './AccordionList';
 import CategoryItemsList from './CategoryItemsList';
 import DifficultyItemsList from './DifficultyItemsList';
-import {AccordionPropsTypes} from './types';
+import {AccordionPropsTypes} from './Accordion.types';
 
 const Accordion = ({
   onCategoryIdChange,
