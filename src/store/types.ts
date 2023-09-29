@@ -11,6 +11,7 @@ export type TestState = {
   questions: QuestionsState;
   currentQuestionIndex: number;
   testScore: number;
+  userAnswers: boolean[];
   setQeustions: (by: QuestionsState) => void;
   updateState: (updates: {
     currentQuestionIndex: number;

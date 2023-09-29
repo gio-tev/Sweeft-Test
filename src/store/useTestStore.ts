@@ -5,6 +5,7 @@ const useTestStore = create<TestState>(set => ({
   questions: [],
   currentQuestionIndex: 0,
   testScore: 0,
+  userAnswers: [],
 
   setQeustions: questions => {
     set({questions});

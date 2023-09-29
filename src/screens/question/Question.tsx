@@ -7,13 +7,13 @@ import useTestStore from '../../store/useTestStore';
 import Title from '../../components/title/Title';
 import he from 'he';
 import Answers from './answers/Answers';
-import Button from '../../components/button/Button';
 import {useThemeColors} from '../../theme/theme';
 import {getQuestionStyles} from './Question.styles';
 import Text from '../../components/text/Text';
+import QuestionButtons from './questionButtons/QuestionButtons';
 
 const Question = () => {
-  const {questions, currentQuestionIndex, testScore, updateState} =
+  const {questions, currentQuestionIndex, testScore, userAnswers, updateState} =
     useTestStore(state => state);
 
   const navigation = useNavigation<StackNavigationProp<any>>();
@@ -37,6 +37,7 @@ const Question = () => {
   const incorrectAnswers = encodedIncorectAnswers.map(ans => he.decode(ans));
   const question = he.decode(encodedQuestion);
   const answers = [...incorrectAnswers, correctAnswer];
+  const isFirstQuestion = currentQuestionIndex === 0;
 
   const progress = (currentQuestionIndex + 1) / questions.length;
 
@@ -53,12 +54,27 @@ const Question = () => {
         ? currentQuestionIndex
         : currentQuestionIndex + 1,
       testScore: isValueCorrect ? testScore + 1 : testScore,
+      userAnswers: [...userAnswers, isValueCorrect],
     };
 
     updateState(updates);
 
     if (isLastQuestion) navigation.navigate('Results');
     else navigation.push('Question');
+  };
+
+  const handlePreviousQuestionPress = () => {
+    if (!isFirstQuestion) {
+      const wasPreviousAnswerCorrect = userAnswers[currentQuestionIndex - 1];
+      const updates = {
+        currentQuestionIndex: currentQuestionIndex - 1,
+        testScore: wasPreviousAnswerCorrect ? testScore - 1 : testScore,
+        userAnswers: userAnswers.slice(0, -1),
+      };
+
+      updateState(updates);
+      navigation.push('Question');
+    }
   };
 
   return (
@@ -76,10 +92,11 @@ const Question = () => {
           onAnswerChange={onAnswerChange}
         />
 
-        <Button
-          title="Next Question"
-          disabled={!value}
-          handlePress={handleNextQuestionPress}
+        <QuestionButtons
+          isFirstQuestion={isFirstQuestion}
+          value={!!value}
+          handlePreviousQuestionPress={handlePreviousQuestionPress}
+          handleNextQuestionPress={handleNextQuestionPress}
         />
       </View>
     </View>
