@@ -1,9 +1,8 @@
 export type QueryTypes = {
   category: number;
   difficulty: string;
-  token: string;
 };
-export type QuesriesWithAmountTypes = {
+export type allQueryTypes = {
   amount: number;
   category: number;
   difficulty: string;

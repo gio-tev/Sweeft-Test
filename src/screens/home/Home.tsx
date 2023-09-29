@@ -5,7 +5,6 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {ActivityIndicator} from 'react-native-paper';
 import useFetchQuestions from '../../services/useFetchQuestions';
 import useFetchCategories from '../../services/useFetchCategories';
-import {TOKEN} from '../../services/utils/constants';
 import useTestStore from '../../store/useTestStore';
 import Error from '../../components/error/Error';
 import Accordion from './accordion/Accordion';
@@ -45,9 +44,7 @@ const Home = () => {
 
   const handleStartTestPress = () => {
     const category = categoryId;
-    const token = TOKEN;
-
-    fetchQuestions({category, difficulty, token});
+    fetchQuestions({category, difficulty});
   };
 
   if (categoriesLoading) return <ActivityIndicator style={styles.container} />;

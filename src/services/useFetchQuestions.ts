@@ -2,7 +2,7 @@ import {useState, useCallback} from 'react';
 import {
   fetchQuestionsCount,
   getQuestionUrl,
-  fetchNewToken,
+  fetchToken,
   handleResponseError,
 } from './utils/helpers';
 import {QueryTypes} from './types';
@@ -17,20 +17,14 @@ const useFetchQuestions = () => {
       setQuestionsLoading(true);
 
       const {category, difficulty} = queries;
+
       const questionsCount = await fetchQuestionsCount(category, difficulty);
+      const token = await fetchToken();
       const amount = questionsCount < 10 ? questionsCount : 10;
-      const quesriesWithAmount = {amount, ...queries};
+      const allQueries = {category, difficulty, amount, token};
 
-      let res = await fetch(getQuestionUrl(quesriesWithAmount));
-      let data = await res.json();
-
-      if (data.response_code === 3 || data.response_code === 4) {
-        const newToken = await fetchNewToken();
-        const queriesWithNewToken = {...quesriesWithAmount, token: newToken};
-
-        res = await fetch(getQuestionUrl(queriesWithNewToken));
-        data = await res.json();
-      }
+      const res = await fetch(getQuestionUrl(allQueries));
+      const data = await res.json();
 
       handleResponseError(data, 'Fetching questions failed.');
 

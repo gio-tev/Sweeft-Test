@@ -4,14 +4,14 @@ import {
   QUESTION_COUNT_URL,
   CATEGORY_QUESTIONS_COUNT_MAP,
 } from './constants';
-import {QuesriesWithAmountTypes} from '../types';
+import {allQueryTypes} from '../types';
 
 export const getQuestionUrl = ({
   amount,
   category,
   difficulty,
   token,
-}: QuesriesWithAmountTypes) => {
+}: allQueryTypes) => {
   return `${BASE_URL}?amount=${amount}&category=${category}&difficulty=${difficulty}&token=${token}`;
 };
 
@@ -21,7 +21,7 @@ export const handleResponseError = (data: any, errorMessage: string) => {
   }
 };
 
-export const fetchNewToken = async () => {
+export const fetchToken = async () => {
   const res = await fetch(NEW_TOKEN_URL);
   const data = await res.json();
 
