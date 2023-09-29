@@ -15,15 +15,12 @@ import QuestionButtons from './questionButtons/QuestionButtons';
 const Question = () => {
   const {questions, currentQuestionIndex, testScore, userAnswers, updateState} =
     useTestStore(state => state);
+  const [value, setValue] = useState<string>('');
 
   const navigation = useNavigation<StackNavigationProp<any>>();
 
   const {width} = useWindowDimensions();
-
-  const [value, setValue] = useState<string>('');
-
   const {primary, secondary, level5} = useThemeColors();
-
   const styles = getQuestionStyles(level5, secondary);
 
   const {
@@ -38,7 +35,6 @@ const Question = () => {
   const question = he.decode(encodedQuestion);
   const answers = [...incorrectAnswers, correctAnswer];
   const isFirstQuestion = currentQuestionIndex === 0;
-
   const progress = (currentQuestionIndex + 1) / questions.length;
 
   const onAnswerChange = (answer: string) => {
@@ -64,17 +60,16 @@ const Question = () => {
   };
 
   const handlePreviousQuestionPress = () => {
-    if (!isFirstQuestion) {
-      const wasPreviousAnswerCorrect = userAnswers[currentQuestionIndex - 1];
-      const updates = {
-        currentQuestionIndex: currentQuestionIndex - 1,
-        testScore: wasPreviousAnswerCorrect ? testScore - 1 : testScore,
-        userAnswers: userAnswers.slice(0, -1),
-      };
+    const wasPreviousAnswerCorrect = userAnswers[currentQuestionIndex - 1];
 
-      updateState(updates);
-      navigation.push('Question');
-    }
+    const updates = {
+      currentQuestionIndex: currentQuestionIndex - 1,
+      testScore: wasPreviousAnswerCorrect ? testScore - 1 : testScore,
+      userAnswers: userAnswers.slice(0, -1),
+    };
+
+    updateState(updates);
+    navigation.push('Question');
   };
 
   return (
